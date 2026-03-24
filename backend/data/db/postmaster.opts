@@ -1,1 +1,0 @@
-D:/projects-visual-studio-code/Test-tasks/rgb-studio-tt/backend/node_modules/@embedded-postgres/windows-x64/native/bin/postgres.exe "-D" "./data/db" "-p" "8500"
