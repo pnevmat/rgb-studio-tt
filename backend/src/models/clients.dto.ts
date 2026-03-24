@@ -1,0 +1,39 @@
+import { IsString, IsEmail, IsInt, Min, Max, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+   
+export class ClientsModel {
+  @ApiProperty({ required: true })
+  @IsString({ message: 'name must be a string' })
+  name!: string;
+
+  @ApiProperty({ required: true })
+  @IsEmail({}, { message: 'Email is not correct' })
+  email!: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  createdAt?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  updatedAt?: string;
+}
+
+export class ParamsModel {
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  page?: string;
+  
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  limit?: string;
+}
