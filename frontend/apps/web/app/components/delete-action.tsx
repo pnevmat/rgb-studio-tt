@@ -19,13 +19,16 @@ import {Dispatch, SetStateAction} from 'react';
 interface DeleteActionProps {
   id: string
   entity: "clients" | "deals"
+  data: Array<any>
   onDeleted: Dispatch<SetStateAction<any[]>>
 }
 
-export function DeleteAction({ id, entity, onDeleted }: DeleteActionProps) {
+export function DeleteAction({ id, entity, data, onDeleted }: DeleteActionProps) {
   const [loading, setLoading] = useState(false)
-
+  
   async function onDelete() {
+    console.log("Client id in delete function: ", id);
+    
     setLoading(true)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/${entity}/${id}`, {
@@ -34,7 +37,7 @@ export function DeleteAction({ id, entity, onDeleted }: DeleteActionProps) {
 
       if (response.ok) {
         const deleted = await response.json();
-        onDeleted(deleted)
+        onDeleted(data.filter(item => item.email !== deleted.email))
       }
     } catch (error) {
       console.error(`Failed to delete ${entity}:`, error)

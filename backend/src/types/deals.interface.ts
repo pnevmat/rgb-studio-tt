@@ -1,19 +1,21 @@
+import {DealStatus} from '../models/deals.dto';
+
 export interface NewDeal {
     title: string,
     amount: number,
-    status?: string | undefined,
+    status?: DealStatus | undefined,
     client: string,
-    createdAt?: string | undefined,
-    updatedAt?: string | undefined
+    createdAt?: Date | undefined,
+    updatedAt?: Date | undefined
 }
 export interface Deal {
     id: string,
     title: string,
     amount: number,
-    status?: string | undefined,
+    status?: DealStatus | undefined,
     client: string,
-    createdAt?: string | undefined,
-    updatedAt?: string | undefined
+    createdAt?: Date | undefined,
+    updatedAt?: Date | undefined
 }
 
 export interface DealsParams {

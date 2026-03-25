@@ -24,7 +24,7 @@ export function EditDealDialog({ deal, onDealUpdated }: { deal: any, onDealUpdat
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/deals/${deal.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/deals/${deal.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

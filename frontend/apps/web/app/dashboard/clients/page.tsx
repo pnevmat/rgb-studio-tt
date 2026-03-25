@@ -37,7 +37,7 @@ export default function ClientsPage() {
   }, [page, limit])
 
   useEffect(() => {fetchClients()}, [])
-
+  
   const totalPages = Math.ceil(total / limit)
 
   return (
@@ -47,7 +47,7 @@ export default function ClientsPage() {
           <h2 className="text-3xl font-bold tracking-tight">Clients</h2>
           <p className="text-muted-foreground">Manage your clients here.</p>
         </div>
-        <CreateClientDialog onClientCreated={setClients} />
+        <CreateClientDialog clients={clients} onClientCreated={setClients} />
       </div>
 
       <div className="rounded-md border bg-card">
@@ -76,7 +76,8 @@ export default function ClientsPage() {
                 </TableCell>
               </TableRow>
             ) : (
-              clients.map((client) => (
+              clients.map((client) => { console.log("Client: ", client);
+               return (
                 <TableRow key={client.id}>
                   <TableCell className="font-medium">{client.name}</TableCell>
                   <TableCell>{client.email}</TableCell>
@@ -89,11 +90,11 @@ export default function ClientsPage() {
                       <Button variant="ghost" size="icon">
                         <Pencil className="h-4 w-4" />
                       </Button>
-                      <DeleteAction id={client.id} entity='clients' onDeleted={setClients} />
+                      <DeleteAction key={client.id} id={client.id} entity='clients' data={clients} onDeleted={setClients} />
                     </div>
                   </TableCell>
                 </TableRow>
-              ))
+              )})
             )}
           </TableBody>
         </Table>

@@ -7,13 +7,7 @@ import {
   ManyToOne 
 } from 'typeorm';
 import { Client } from './client.entity';
-
-export enum DealStatus {
-  NEW = 'NEW',
-  IN_PROGRESS = 'IN_PROGRESS',
-  WON = 'WON',
-  LOST = 'LOST',
-}
+import {DealStatus} from '../models/deals.dto';
 
 @Entity('deals')
 export class Deal {
@@ -40,5 +34,5 @@ export class Deal {
   updatedAt!: Date;
 
   @ManyToOne(() => Client, (client) => client.deals, { onDelete: 'CASCADE' })
-  client!: Client;
+  client!: string;
 }
