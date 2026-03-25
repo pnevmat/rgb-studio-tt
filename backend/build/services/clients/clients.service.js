@@ -22,12 +22,18 @@ let ClientsService = class ClientsService {
         const { page, limit } = params;
         const defaultLimit = 5;
         if (!page && !limit)
-            return this.clients;
+            return { clients: this.clients, total: this.clients.length };
         if (!page)
-            return this.clients.filter((client, i) => i < Number(limit));
+            return { clients: this.clients.filter((client, i) => i < Number(limit)), total: this.clients.length };
         if (!limit)
-            return this.clients.filter((client, i) => i > (Number(page) - 1) * defaultLimit && i < Number(page) * defaultLimit);
-        return this.clients.filter((client, i) => i > (Number(page) - 1) * Number(limit) && i < Number(page) * Number(limit));
+            return {
+                clients: this.clients.filter((client, i) => i > (Number(page) - 1) * defaultLimit && i < Number(page) * defaultLimit),
+                total: this.clients.length
+            };
+        return {
+            clients: this.clients.filter((client, i) => i > (Number(page) - 1) * Number(limit) && i < Number(page) * Number(limit)),
+            total: this.clients.length
+        };
     }
     getOne(id) {
         const client = this.clients.find(client => client.id === id);

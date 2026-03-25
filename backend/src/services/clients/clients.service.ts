@@ -15,10 +15,16 @@ export class ClientsService {
   async getAll(params: ClientsParams) {
     const {page, limit} = params;
     const defaultLimit = 5
-    if (!page && !limit) return this.clients
-    if (!page) return this.clients.filter((client, i) => i < Number(limit))
-    if (!limit) return this.clients.filter((client, i) => i > (Number(page) - 1) * defaultLimit && i < Number(page) * defaultLimit)
-    return this.clients.filter((client, i) => i > (Number(page) - 1) * Number(limit) && i < Number(page) * Number(limit));
+    if (!page && !limit) return {clients: this.clients, total: this.clients.length}
+    if (!page) return {clients: this.clients.filter((client, i) => i < Number(limit)), total: this.clients.length}
+    if (!limit) return {
+      clients: this.clients.filter((client, i) => i > (Number(page) - 1) * defaultLimit && i < Number(page) * defaultLimit), 
+      total: this.clients.length
+    }
+    return {
+      clients: this.clients.filter((client, i) => i > (Number(page) - 1) * Number(limit) && i < Number(page) * Number(limit)), 
+      total: this.clients.length
+    };
   }
   getOne(id: string) {
     const client = this.clients.find(client => client.id === id)

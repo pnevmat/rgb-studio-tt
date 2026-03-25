@@ -26,14 +26,14 @@ let ClientsController = class ClientsController {
     async getAll(paramsModel) {
         return this.clientsService.getAll(paramsModel);
     }
-    async getOne(query) {
-        return this.clientsService.getOne('34455');
+    async getOne(param) {
+        return this.clientsService.getOne(param);
     }
-    async updateOne(query, body) {
-        return this.clientsService.updateOne('344545', body);
+    async updateOne(param, body) {
+        return this.clientsService.updateOne(param, body);
     }
-    async deleteOne(query) {
-        return this.clientsService.deleteOne('35454');
+    async deleteOne(param) {
+        return this.clientsService.deleteOne(param);
     }
 };
 exports.ClientsController = ClientsController;
@@ -46,31 +46,31 @@ __decorate([
 ], ClientsController.prototype, "createOne", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Param)()),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [clients_dto_1.ParamsModel]),
     __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Param)(':id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "getOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Param)(':id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "updateOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Param)(':id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ClientsController.prototype, "deleteOne", null);
 exports.ClientsController = ClientsController = __decorate([

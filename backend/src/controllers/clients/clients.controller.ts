@@ -2,6 +2,7 @@ import { Controller, Post, Get, Patch, Delete, Query, Body, Param } from '@nestj
 import {ClientsModel, ParamsModel} from '../../models/clients.dto';
 import { ClientsService } from '../../services/clients/clients.service';
 import { NewClient, Client, ClientsParams } from "../../types/clients.interface";
+import { log } from 'console';
 
 @Controller('clients')
 export class ClientsController {
@@ -12,19 +13,19 @@ export class ClientsController {
     return this.clientsService.createOne(clientsModel)
   }
   @Get()
-  async getAll(@Param() paramsModel: ParamsModel): Promise<Array<Client>> {
+  async getAll(@Query() paramsModel: ParamsModel): Promise<{clients: Array<Client>, total: number}> {
     return this.clientsService.getAll(paramsModel)
   }
   @Get(':id')
-  async getOne(@Query() query: Request): Promise<Client | string> {
-    return this.clientsService.getOne('34455')
+  async getOne(@Param(':id') param: string): Promise<Client | string> {
+    return this.clientsService.getOne(param)
   }
   @Patch(':id')
-  async updateOne(@Query() query: Request, @Body() body: Body): Promise<Client | string> {
-    return this.clientsService.updateOne('344545', body)
+  async updateOne(@Param(':id') param: string, @Body() body: Body): Promise<Client | string> {
+    return this.clientsService.updateOne(param, body)
   }
   @Delete(':id')
-  async deleteOne(@Query() query: Request): Promise<Client | string> {
-    return this.clientsService.deleteOne('35454')
+  async deleteOne(@Param(':id') param: string): Promise<Client | string> {
+    return this.clientsService.deleteOne(param)
   }
 }
