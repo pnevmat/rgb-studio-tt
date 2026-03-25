@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsInt, Min, Max, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsDate, IsInt, Min, Max, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
    
 export class ClientsModel {
@@ -17,13 +17,13 @@ export class ClientsModel {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsString()
-  createdAt?: string;
+  @IsDate()
+  createdAt?: Date;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsString()
-  updatedAt?: string;
+  @IsDate()
+  updatedAt?: Date;
 }
 
 export class ParamsModel {

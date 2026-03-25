@@ -16,7 +16,7 @@ import { Button } from "../../../../packages/ui/src/components/button";
 import { Plus } from "lucide-react";
 import {Dispatch, SetStateAction} from 'react';
 
-export function CreateClientDialog({ onClientCreated }: { onClientCreated:  Dispatch<SetStateAction<any[]>> }) {
+export function CreateClientDialog({ clients, onClientCreated }: { clients: Array<any>, onClientCreated:  Dispatch<SetStateAction<any[]>> }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -42,7 +42,7 @@ export function CreateClientDialog({ onClientCreated }: { onClientCreated:  Disp
         const client = await response.json()
         
         setOpen(false)
-        onClientCreated(client)
+        onClientCreated([...clients, client])
       }
     } catch (error) {
       console.error("Failed to create client:", error)

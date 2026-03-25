@@ -14,7 +14,7 @@ export function CreateDealDialog({ onDealCreated }: { onDealCreated: () => void 
 
   useEffect(() => {
     if (open) {
-      fetch("http://localhost:3000/clients")
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/clients`)
         .then(res => res.json())
         .then(data => setClients(data))
     }
@@ -31,7 +31,7 @@ export function CreateDealDialog({ onDealCreated }: { onDealCreated: () => void 
       clientId: formData.get("clientId"),
     }
 
-    const response = await fetch("http://localhost:3000/deals", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/deals`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

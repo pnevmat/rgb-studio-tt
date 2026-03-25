@@ -1,5 +1,12 @@
-import { IsString, IsInt, IsOptional, IsIn } from 'class-validator';
+import { IsString, IsDate, IsInt, IsOptional, IsIn } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
+export enum DealStatus {
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  WON = 'WON',
+  LOST = 'LOST',
+}
    
 export class DealsModel {
   @ApiProperty({ required: true })
@@ -19,21 +26,21 @@ export class DealsModel {
   @IsIn(['NEW', 'IN_PROGRESS', 'WON', 'LOST'], {
     message: 'status must be one of predefined values',
   })
-  status?: string;
+  status?: DealStatus;
 
   @ApiProperty({ required: true })
   @IsString()
   client!: string;
 
   @ApiProperty({ required: false })
-  @IsString()
+  @IsDate()
   @IsOptional()
-  createdAt?: string;
+  createdAt?: Date;
 
   @ApiProperty({ required: false })
-  @IsString()
+  @IsDate()
   @IsOptional()
-  updatedAt?: string;
+  updatedAt?: Date;
 }
 
 export class ParamsModel {

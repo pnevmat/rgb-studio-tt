@@ -2,16 +2,16 @@ export interface NewClient {
     name: string,
     email: string,
     phone?: string | undefined,
-    createdAt?: string | undefined,
-    updatedAt?: string | undefined
+    createdAt?: Date | undefined,
+    updatedAt?: Date | undefined
 }
 export interface Client {
     id: string,
     name: string,
     email: string,
     phone?: string | undefined,
-    createdAt?: string | undefined,
-    updatedAt?: string | undefined
+    createdAt?: Date | undefined,
+    updatedAt?: Date | undefined
 }
 
 export interface ClientsParams {

@@ -9,16 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Deal = exports.DealStatus = void 0;
+exports.Deal = void 0;
 const typeorm_1 = require("typeorm");
 const client_entity_1 = require("./client.entity");
-var DealStatus;
-(function (DealStatus) {
-    DealStatus["NEW"] = "NEW";
-    DealStatus["IN_PROGRESS"] = "IN_PROGRESS";
-    DealStatus["WON"] = "WON";
-    DealStatus["LOST"] = "LOST";
-})(DealStatus || (exports.DealStatus = DealStatus = {}));
+const deals_dto_1 = require("../models/deals.dto");
 let Deal = class Deal {
 };
 exports.Deal = Deal;
@@ -37,8 +31,8 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: DealStatus,
-        default: DealStatus.NEW,
+        enum: deals_dto_1.DealStatus,
+        default: deals_dto_1.DealStatus.NEW,
     }),
     __metadata("design:type", String)
 ], Deal.prototype, "status", void 0);
@@ -52,7 +46,7 @@ __decorate([
 ], Deal.prototype, "updatedAt", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => client_entity_1.Client, (client) => client.deals, { onDelete: 'CASCADE' }),
-    __metadata("design:type", client_entity_1.Client)
+    __metadata("design:type", String)
 ], Deal.prototype, "client", void 0);
 exports.Deal = Deal = __decorate([
     (0, typeorm_1.Entity)('deals')

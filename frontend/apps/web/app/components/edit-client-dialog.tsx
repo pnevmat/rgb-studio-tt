@@ -23,7 +23,7 @@ export function EditDealDialog({ client, onClientUpdated }: { client: any, onCli
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/clients/${client.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/clients/${client.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

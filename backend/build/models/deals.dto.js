@@ -9,9 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParamsModel = exports.DealsModel = void 0;
+exports.ParamsModel = exports.DealsModel = exports.DealStatus = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
+var DealStatus;
+(function (DealStatus) {
+    DealStatus["NEW"] = "NEW";
+    DealStatus["IN_PROGRESS"] = "IN_PROGRESS";
+    DealStatus["WON"] = "WON";
+    DealStatus["LOST"] = "LOST";
+})(DealStatus || (exports.DealStatus = DealStatus = {}));
 class DealsModel {
 }
 exports.DealsModel = DealsModel;
@@ -45,15 +52,15 @@ __decorate([
 ], DealsModel.prototype, "client", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Date)
 ], DealsModel.prototype, "createdAt", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Date)
 ], DealsModel.prototype, "updatedAt", void 0);
 class ParamsModel {
 }

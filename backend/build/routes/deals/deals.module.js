@@ -8,6 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DealsRouter = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const deal_entity_1 = require("../../dbEntities/deal.entity");
 const deals_controller_1 = require("../../controllers/deals/deals.controller");
 const deals_services_1 = require("../../services/deals/deals.services");
 let DealsRouter = class DealsRouter {
@@ -15,6 +17,7 @@ let DealsRouter = class DealsRouter {
 exports.DealsRouter = DealsRouter;
 exports.DealsRouter = DealsRouter = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([deal_entity_1.Deal])],
         controllers: [deals_controller_1.DealsController],
         providers: [deals_services_1.DealsService],
     })

@@ -28,7 +28,6 @@ export class Client {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  // Связь: один клиент может иметь много сделок
   @OneToMany(() => Deal, (deal) => deal.client)
   deals!: Deal[];
 }

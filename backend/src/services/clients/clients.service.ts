@@ -1,49 +1,61 @@
-import { Injectable } from '@nestjs/common';
-import { NewClient, Client, ClientsParams } from '../../types/clients.interface';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import {Client} from '../../dbEntities/client.entity';
+import { NewClient, ClientsParams } from '../../types/clients.interface';
 import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class ClientsService {
-  private readonly clients: Client[] = [];
+  constructor(
+    @InjectRepository(Client)
+    private readonly clients: Repository<Client>
+  ) {}
 
   async createOne(client: NewClient) {
-    const newClient = {id: uuidv4(), ...client}
-    this.clients.push(newClient);
-    return newClient;
+    const existingClient = await this.clients.findOne({ 
+      where: { email: client.email }
+    });
+
+    if (existingClient) throw new ConflictException('Client already exist');
+    // id: uuidv4(), 
+    const newClient = this.clients.create({...client});
+    return await this.clients.save(newClient);
   }
 
   async getAll(params: ClientsParams) {
-    const {page, limit} = params;
-    const defaultLimit = 5
-    if (!page && !limit) return {clients: this.clients, total: this.clients.length}
-    if (!page) return {clients: this.clients.filter((client, i) => i < Number(limit)), total: this.clients.length}
-    if (!limit) return {
-      clients: this.clients.filter((client, i) => i > (Number(page) - 1) * defaultLimit && i < Number(page) * defaultLimit), 
-      total: this.clients.length
-    }
-    return {
-      clients: this.clients.filter((client, i) => i > (Number(page) - 1) * Number(limit) && i < Number(page) * Number(limit)), 
-      total: this.clients.length
-    };
+    const page = Number(params.page) || 1;
+    const limit = Number(params.limit) || 5;
+
+    const [clients, total] = await this.clients.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { createdAt: 'DESC' },
+    });
+    return {clients, total};
   }
-  getOne(id: string) {
-    const client = this.clients.find(client => client.id === id)
-    if (!client) return 'Client not found'
+  async getOne(id: string) {
+    const client = await this.clients.findOne({
+      where: { id },
+      relations: ['deals']
+    })
+
+    if (!client) throw new NotFoundException('Client not found');
     return client
   }
-  updateOne(id: string, data: object) {
-    const client = this.clients.find(client => client.id === id)
-    if (!client) return 'Client does not exist'
+  async updateOne(id: string, data: object) {
+    const client = await this.clients.preload({
+      id: id,
+      ...data,
+    });
 
-    const newClient = {...client, ...data}
-    this.clients[this.clients.indexOf(client)] = newClient
-
-    return newClient
+    if (!client) throw new NotFoundException('Client does not exist');
+    return await this.clients.save(client);
   }
-  deleteOne(id: string) {
-    const client = this.clients.find(client => client.id === id)
-    if (!client) return 'Client does not exist'
-    this.clients.splice(this.clients.indexOf(client), 1)
+  async deleteOne(id: string) {
+    const client = await this.getOne(id);
+    if (!client) throw new NotFoundException('Client does not exist');
+    await this.clients.remove(client);
     return client
   }
 }

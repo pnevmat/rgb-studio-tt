@@ -14,8 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DealsController = void 0;
 const common_1 = require("@nestjs/common");
-const deals_services_1 = require("../../services/deals/deals.services");
 const deals_dto_1 = require("../../models/deals.dto");
+const deals_services_1 = require("../../services/deals/deals.services");
 let DealsController = class DealsController {
     constructor(dealsService) {
         this.dealsService = dealsService;
@@ -26,11 +26,11 @@ let DealsController = class DealsController {
     async getAll(paramsModel) {
         return this.dealsService.getAll(paramsModel);
     }
-    async updateOne(query, body) {
-        return this.dealsService.updateOne('45656', body);
+    async updateOne(param, body) {
+        return this.dealsService.updateOne(param, body);
     }
-    async deleteOne(query) {
-        return this.dealsService.deleteOne('344545');
+    async deleteOne(param) {
+        return this.dealsService.deleteOne(param);
     }
 };
 exports.DealsController = DealsController;
@@ -50,17 +50,17 @@ __decorate([
 ], DealsController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Param)(':id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], DealsController.prototype, "updateOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Param)(':id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DealsController.prototype, "deleteOne", null);
 exports.DealsController = DealsController = __decorate([
